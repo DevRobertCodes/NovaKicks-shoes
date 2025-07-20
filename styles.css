@@ -9,11 +9,39 @@ html {
     scroll-behavior: smooth;
 }
 
+:root{
+  --bg-img: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+  --text-dark: #333;
+  --bg-white: rgba(255, 255, 255, 0.95);
+  --text-light: white;
+  --bg: white;
+  --text-gray: #666;
+  --light-grey: #f8f9fa;
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode {
+  --bg-img: #180132;
+  --bg: #121212;                /* Deep charcoal black */
+  --bg-white: rgba(30, 30, 30, 0.95); /* Slightly transparent dark */
+  --text-dark: #e0e0e0;         /* Light gray for dark mode text */
+  --text-light: #ffffff;        /* Pure white where needed */
+  --text-gray: #bbbbbb;         /* Soft gray for secondary text */
+  --light-grey: #1f1f1f;        /* Slight contrast for cards, sections */
+  --overlay-bg: rgba(66, 64, 64, 0.5); /* Soft white overlay */
+}
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-dark);
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+div.header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
@@ -25,11 +53,12 @@ body {
 /* Navigation Styles */
 .navbar {
     position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    top: 10px;
+    width: 80%;
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--bg);
+    border-radius: 50px;
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
     z-index: 1000;
     transition: all 0.3s ease;
 }
@@ -37,7 +66,9 @@ body {
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
+    background: var(--bg);
+    border-radius: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,7 +92,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: #333;
+    color: var(--text-dark);
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
@@ -85,7 +116,9 @@ body {
 .nav-icons {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    align-content: center;
+    justify-content: space-evenly;
+    color: var(--text-dark);
 }
 
 .search-icon,
@@ -106,7 +139,7 @@ body {
     top: -5px;
     right: -5px;
     background: #ff4757;
-    color: white;
+    color: var(--text-light);
     border-radius: 50%;
     width: 18px;
     height: 18px;
@@ -118,20 +151,52 @@ body {
 }
 
 .search-icon:hover,
-.cart-icon:hover {
+.cart-icon:hover, 
+#theme-switch {
     background-color: rgba(102, 126, 234, 0.1);
+}
+
+#theme-switch{
+    padding: 0;
+    border: none;
+    background: transparent;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+#theme-switch svg{
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#theme-switch .icon-moon{
+    fill: #333;
+}
+
+/* Default: show moon icon, Hide sun */
+#theme-switch svg:last-child{
+    display: none;
+}
+
+/* When dark mode is active, swap icons */
+.dark-mode #theme-switch svg:first-child{
+    display: none;
+}
+.dark-mode #theme-switch svg:last-child{
+    display: block;
+    margin-bottom: 4px;
 }
 
 .hamburger {
     display: none;
     flex-direction: column;
+    align-items: center;
     cursor: pointer;
 }
 
 .bar {
     width: 25px;
     height: 3px;
-    background-color: #333;
+    background-color: var(--text-dark);
     margin: 3px 0;
     transition: 0.3s;
 }
@@ -144,6 +209,8 @@ body {
     display: flex;
     align-items: center;
     overflow: hidden;
+    padding-top: 6rem;
+    padding-bottom: 2rem;
 }
 
 .hero::before {
@@ -153,7 +220,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+    background: var(--bg-img);
     background-size: cover;
 }
 
@@ -370,7 +437,7 @@ body {
 .scroll-arrow {
     width: 30px;
     height: 30px;
-    border: 2px solid white;
+    border: 2px solid var(--bg-white);
     border-top: none;
     border-left: none;
     transform: rotate(45deg);
@@ -379,7 +446,7 @@ body {
 /* Featured Products Section */
 .featured-products {
     padding: 6rem 0;
-    background: #f8f9fa;
+    background: var(--light-grey);
 }
 
 .section-header {
@@ -404,12 +471,12 @@ body {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    color: #333;
+    color: var(--text-dark);
 }
 
 .section-description {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-gray);
     max-width: 600px;
     margin: 0 auto;
 }
@@ -422,7 +489,7 @@ body {
 }
 
 .product-card {
-    background: white;
+    background: var(--bg-white);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -458,7 +525,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--overlay-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -471,8 +538,8 @@ body {
 }
 
 .quick-view-btn {
-    background: white;
-    color: #333;
+    background: var(--bg);
+    color: var(--text-dark);
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
@@ -503,7 +570,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .action-btn:hover {
@@ -551,11 +618,11 @@ body {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #333;
+    color: var(--text-dark);
 }
 
 .product-category {
-    color: #666;
+    color: var(--text-gray);
     font-size: 0.9rem;
     margin-bottom: 1rem;
 }
@@ -573,7 +640,7 @@ body {
 }
 
 .rating-count {
-    color: #666;
+    color: var(--text-gray);
     font-size: 0.85rem;
 }
 
@@ -584,9 +651,8 @@ body {
 .current-price {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #333;
+    color: var(--text-dark);
 }
-
 .original-price {
     font-size: 1rem;
     color: #999;
@@ -620,7 +686,7 @@ body {
 /* Features Section */
 .features {
     padding: 6rem 0;
-    background: white;
+    background: var(--bg-white);
 }
 
 .features-grid {
@@ -643,18 +709,18 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     margin-bottom: 1.5rem;
-    color: white;
+    color: var(--text-light);
 }
 
 .feature-card h3 {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #333;
+    color: var(--text-dark);
 }
 
 .feature-card p {
-    color: #666;
+    color: var(--text-gray);
     line-height: 1.6;
 }
 
@@ -662,7 +728,7 @@ body {
 .newsletter {
     padding: 4rem 0;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    color: var(--text-light);
 }
 
 .newsletter-content {
@@ -699,7 +765,8 @@ body {
     flex: 1;
     padding: 1rem 1.5rem;
     border: none;
-    background: white;
+    background: var(--bg);
+    color: var(--text-light);
     font-size: 1rem;
     outline: none;
 }
@@ -716,8 +783,8 @@ body {
 
 /* Footer */
 .footer {
-    background: #1a1a1a;
-    color: white;
+    background: var(--bg);
+    color: var(--text-dark);
     padding: 4rem 0 2rem;
 }
 
@@ -755,9 +822,9 @@ body {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.1);
+    background: #667eea;
     border-radius: 50%;
-    color: white;
+    color: var(--text-light);
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -782,13 +849,13 @@ body {
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-gray);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-    color: white;
+    color: var(--text-dark);
 }
 
 .footer-bottom {
