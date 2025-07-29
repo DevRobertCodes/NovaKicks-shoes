@@ -1019,6 +1019,7 @@ div.header{
         grid-template-columns: 1fr;
     }
     
+    
     .input-group {
         flex-direction: column;
         border-radius: 15px;
